@@ -2,13 +2,13 @@ import {create} from "zustand";
 
 type MacroKey = "protein" | "fats" | "carbs" | "calories";
 type Macro = { goal: number; actual: number };
+type CalorieMacro = Macro & { burned: number, goal: number };
 
 interface NutritionState {
   protein: Macro;
   fats: Macro;
   carbs: Macro;
-  calories: Macro;
-
+  calories: CalorieMacro;
   setGoal: (key: MacroKey, value: number) => void;
   setActual: (key: MacroKey, value: number) => void;
   setAll: (newState: Partial<NutritionState>) => void;
@@ -18,7 +18,7 @@ const defaultState = {
   protein: { goal: 200, actual: 0 },
   fats: { goal: 60, actual: 0 },
   carbs: { goal: 200, actual: 0 },
-  calories: { goal: 2000, actual: 0 },
+  calories: { goal: 2000, actual: 1200, burned: 200 },
 };
 
 const useNutritionStore = create<NutritionState>((set) => ({
