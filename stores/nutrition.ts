@@ -15,9 +15,9 @@ interface NutritionState {
 }
 
 const defaultState = {
-  protein: { goal: 200, actual: 0 },
-  fats: { goal: 60, actual: 0 },
-  carbs: { goal: 200, actual: 0 },
+  protein: { goal: 200, actual: 100 },
+  fats: { goal: 60, actual: 60 },
+  carbs: { goal: 200, actual: 10 },
   calories: { goal: 2000, actual: 1200, burned: 200 },
 };
 

@@ -1,46 +1,23 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { TouchableOpacity, Text } from "react-native";
-import { useRouter } from "expo-router";
-import { authClient } from "@/lib/auth-client";
-
-function ProfileButton() {
-  const { data: session } = authClient.useSession();
-  const router = useRouter();
-  return (
-    <TouchableOpacity
-      onPress={() => router.push("/profile")}
-      style={{ paddingHorizontal: 12 }}
-      accessibilityLabel="Open profile"
-    >
-      <AntDesign name="user" size={20} color="#fff" />
-      <Text>Hello {session?.user?.name}</Text>
-    </TouchableOpacity>
-  );
-}
+import { useTheme } from "@/themes/ThemeProvider";
 
 export default function TabLayout() {
-  const { data: session } = authClient.useSession();
+  const { theme } = useTheme();
+
   return (
     <Tabs
       screenOptions={{
-        // use the Stack header for dashboard screens
         headerShown: true,
-        headerStyle: { backgroundColor: "#0f172a" },
-        headerTintColor: "#fff",
+        headerStyle: { backgroundColor: theme.colors.headerBackground },
+        headerTintColor: theme.colors.primaryText,
         headerTitleAlign: "center",
-        headerRight: () => <ProfileButton />,
-
-        // tab bar styling to match header
         tabBarStyle: {
-          backgroundColor: "#0f172a",
-          height: 64,
-          paddingBottom: 8,
+          backgroundColor: theme.colors.headerBackground,
         },
-        tabBarActiveTintColor: "#0068dfff",
-        tabBarInactiveTintColor: "#727272ff",
+        tabBarActiveTintColor: theme.colors.blue,
+        tabBarInactiveTintColor: theme.colors.primaryText,
         tabBarShowLabel: true,
       }}
     >
@@ -48,6 +25,7 @@ export default function TabLayout() {
         name="gym"
         options={{
           title: "Gym",
+          tabBarLabelPosition: 'below-icon',
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="fitness-center" color={color} size={size} />
           ),
@@ -57,8 +35,19 @@ export default function TabLayout() {
         name="nutrition"
         options={{
           title: "Nutrition",
+          tabBarLabelPosition: 'below-icon',
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="restaurant" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="person" color={color} size={size} />
           ),
         }}
       />
