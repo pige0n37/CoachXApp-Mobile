@@ -2,10 +2,12 @@ import React from "react";
 import { Tabs } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Text } from "react-native";
 import { useRouter } from "expo-router";
+import { authClient } from "@/lib/auth-client";
 
 function ProfileButton() {
+  const { data: session } = authClient.useSession();
   const router = useRouter();
   return (
     <TouchableOpacity
@@ -14,11 +16,13 @@ function ProfileButton() {
       accessibilityLabel="Open profile"
     >
       <AntDesign name="user" size={20} color="#fff" />
+      <Text>Hello {session?.user?.name}</Text>
     </TouchableOpacity>
   );
 }
 
 export default function TabLayout() {
+  const { data: session } = authClient.useSession();
   return (
     <Tabs
       screenOptions={{
